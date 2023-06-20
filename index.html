@@ -1,0 +1,101 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+	<title>0 dias</title>
+  </head>
+  <link rel="stylesheet" href="style.css">
+  
+<script type ="text/javascript" >
+
+//localStorage.removeItem("recordDate");
+//localStorage.setItem("recordDate", new Date("06/2/2023"));
+//localStorage.removeItem("recordDays");
+//localStorage.setItem("recordDays","0");
+
+	if (typeof(Storage) !== "undefined") {
+		if(localStorage.getItem("recordDays") == null){
+			resetRecordDays();
+		}
+		if(localStorage.getItem("recordDate") == null){
+			resetRecordDate();
+		}
+	} else {
+		console.log("Sorry, your browser does not support Web Storage...");
+	}
+
+	function showtime() {
+
+		 var recordDays = ( localStorage.getItem("recordDays") == null ? "0" : localStorage.getItem("recordDays") );
+		 var recordDate = ( localStorage.getItem("recordDate") == null ? new Date() : localStorage.getItem("recordDate") );
+		 var actualDays = getDaysDiff(new Date(recordDate), new Date());
+
+		if(actualDays > recordDays){
+		    recordDays = actualDays;
+			localStorage.setItem("recordDays", recordDays);
+			localStorage.setItem("recordDate", new Date());
+		}
+
+		document.dateform.days.value = actualDays;
+		document.dateform.record.value = recordDays;
+		
+		sleep(60000).then(() => {
+			location.reload();
+			showtime();
+		});
+
+	}
+	
+	function getDaysDiff(date_1, date_2){
+		let difference = date_1.getTime() - date_2.getTime();
+		let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+		
+		return Math.abs(TotalDays);
+	}
+
+	function sleep (time) {
+	  return new Promise((resolve) => setTimeout(resolve, time));
+	}
+
+	function resetRecordDate(){
+		localStorage.setItem("recordDate",  new Date());
+		location.reload();
+	}
+	
+	function resetRecordDays(){
+		localStorage.setItem("recordDays",  "0");
+		location.reload();
+	}
+
+ </script>
+
+<body Onload="showtime()" >
+<form name=dateform>
+	<br>
+	<a href="" id="a"></a>
+	<div style="white-space:nowrap;text-align:center;" >
+		<label for="score"  align="center" style="color:white">ESTAMOS TRABALHANDO</label > 
+			<br>
+		<label for="score"  align="center" style="color:white"> HÁ </label > 
+			<input class="center" size="3" type="text" name="days" id="score"  disabled>
+		<label style="color:white" align="center"> DIA(S)</label>
+	</div>
+
+	<div style="white-space:nowrap;text-align:center;" >
+		<label style="color:white" align="center">SEM BUGS</br></label>
+			<br>
+		<label style="color:white" align="center"> NOSSO RECORDE É DE </label>
+			<input class="center" size="4" type="text" name="record" id="record" disabled>
+		<label style="color:white" align="center"> DIA(S).</label>
+	</div>
+</form>
+
+<br>
+<div style="text-align:center;" >
+	<label align="center"  style="color:white">COLABORE PARA MELHORAR ESTE ÍNDICE</label>
+</div>
+
+<button  class="botRecord" onclick="resetRecordDays()" >Resetar Record</button-->
+<button  class="bot" onclick="resetRecordDate()" >Resetar Dias</button>
+
+</body>
+</html>
